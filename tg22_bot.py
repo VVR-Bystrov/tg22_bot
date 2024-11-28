@@ -5,7 +5,7 @@ import threading
 import time
 from datetime import datetime
 
-TOKEN = 'token'
+TOKEN = 'enter token here'
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -69,4 +69,13 @@ def handle_num(message):
     prime_numbers = generate_prime_numbers()
     bot.send_message(message.chat.id, f"Первые десять случайных простых чисел: {prime_numbers}")
 
-bot.polling()
+####bot.polling()
+while True:
+    try:
+        bot.polling(none_stop=True, timeout=60)
+    except telebot.apihelper.ApiException as e:
+        print(f"Ошибка API: {e}")
+        time.sleep(15)  # Подождать перед повторной попыткой
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
+        time.sleep(15)  # Подождать перед повторной попыткой
